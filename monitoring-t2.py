@@ -5,7 +5,7 @@ import json
 import time
 
 def lambda_handler(event, context):
-    ec2 = boto3.resource('ec2')
+    ec2 = boto3.client('ec2')
 
 if __name__ == '__main__':
     lambda_handler(None, None)
