@@ -21,12 +21,18 @@ endif
 
 #
 .DEFAULT_GOAL:=	${NAME}.zip
-.PHONY:		clean setup-cron setup-lambda setup-role
+.PHONY:		clean deploy setup-cron setup-lambda setup-role
 
 #
 clean:
 	rm -f -- "${NAME}.zip"
 	rm -fr site-packages/
+
+deploy: ${NAME}.zip
+	aws lambda update-function-code \
+		--function-name "${NAME}" \
+		--zip-file "fileb://${NAME}.zip" \
+		--publish
 
 setup-cron:
 	aws events put-rule --schedule-expression 'rate(1 hour)' --name "${NAME}" || true
