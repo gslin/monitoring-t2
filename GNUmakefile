@@ -35,7 +35,7 @@ deploy: ${NAME}.zip
 		--publish
 
 setup-cron:
-	aws events put-rule --schedule-expression 'rate(1 hour)' --name "${NAME}" || true
+	aws events put-rule --schedule-expression 'rate(5 monutes)' --name "${NAME}" || true
 	aws lambda add-permission --function-name "${NAME}" --statement-id "${NAME}" --action lambda:InvokeFunction --principal events.amazonaws.com --source-arn "arn:aws:events:${REGION}:${ACCOUNT_ID}:rule/${NAME}" || true
 	aws events put-targets --rule "${NAME}" --targets '{"Id":"Id${NOW}","Arn":"arn:aws:lambda:${REGION}:${ACCOUNT_ID}:function:${NAME}"}' || true
 
