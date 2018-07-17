@@ -3,6 +3,7 @@
 
 #
 NAME?=		monitoring-t2
+NOW?=		$(shell date +%s)
 ROLE?=		Role-Lambda-Montoring-T2
 
 #
@@ -20,12 +21,15 @@ endif
 
 #
 .DEFAULT_GOAL:=	${NAME}.zip
-.PHONY:		clean setup-role
+.PHONY:		clean setup-lambda setup-role
 
 #
 clean:
 	rm -f -- "${NAME}.zip"
 	rm -fr site-packages/
+
+setup-lambda: ${NAME}.zip
+	aws lambda create-function --function "${NAME}" --runtime python3.6 --role "arn:aws:iam::${ACCOUNT_ID}:role/${ROLE}" --handler "${NAME}.lambda_handler" --function-name "${NAME}" --zip-file "fileb://${NAME}.zip" --timeout 60 --memory-size 128 || true
 
 setup-role:
 	aws iam create-role --role-name "${ROLE}" --assume-role-policy-document '{"Version":"2012-10-17","Statement":{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}}' || true
