@@ -15,7 +15,7 @@ def lambda_handler(event, context):
             validate_instance(i['InstanceId'])
 
 def validate_instance(id):
-    pass
+    cw = boto3.client('cloudwatch')
 
 if __name__ == '__main__':
     lambda_handler(None, None)
