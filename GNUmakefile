@@ -2,6 +2,9 @@
 -include GNUmakefile.local
 
 #
+NAME?=		monitoring-t2
+
+#
 ifdef PROFILE
 export AWS_DEFAULT_PROFILE=${PROFILE}
 else
