@@ -25,3 +25,7 @@ We have put AWS-related updating commands into GNUmakefile, so you can use the f
 Usually you don't need to cleanup, but if you want/need to do it, use the following commands:
 
     make clean
+
+## License
+
+See [LICENSE](/LICENSE).
