@@ -34,7 +34,13 @@ def validate_instance(id):
         Statistics=['Average'],
     )
 
-    # Now res['Datapoints'][0]['Average'] is result.
+    # Now res['Datapoints'][0]['Average'] is the result.
+
+    try:
+        if res['Datapoints'][0]['Average'] < 10:
+            pass
+    except IndexError:
+        pass
 
 if __name__ == '__main__':
     lambda_handler(None, None)
