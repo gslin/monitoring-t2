@@ -37,7 +37,6 @@ class monitor_t2:
         )
 
         try:
-            print(res)
             if res['Datapoints'][0]['Average'] < 10:
                 pass
         except IndexError:
