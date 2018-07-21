@@ -6,10 +6,12 @@ import datetime
 CLOUDWATCH_PERIOD = 300
 
 class monitor_t2:
-    def lambda_handler(self, event, context):
-        ec2 = boto3.client('ec2')
+    def __init__(self):
+        self.cw = boto3.client('cloudwatch')
+        self.ec2 = boto3.client('ec2')
 
-        instances = ec2.describe_instances(Filters=[{
+    def lambda_handler(self, event, context):
+        instances = self.ec2.describe_instances(Filters=[{
             'Name': 'instance-type',
             'Values': ['t2.*'],
         }])
@@ -19,10 +21,8 @@ class monitor_t2:
                 self.validate_instance(i['InstanceId'])
 
     def validate_instance(self, id):
-        cw = boto3.client('cloudwatch')
-
         now = datetime.datetime.utcnow()
-        res = cw.get_metric_statistics(
+        res = self.cw.get_metric_statistics(
             Namespace='AWS/EC2',
             MetricName='CPUCreditBalance',
             Dimensions=[{
