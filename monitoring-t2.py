@@ -9,6 +9,7 @@ class monitor_t2:
     def __init__(self):
         self.cw = boto3.client('cloudwatch')
         self.ec2 = boto3.client('ec2')
+        self.sns = boto3.client('sns')
 
     def lambda_handler(self, event, context):
         instances = self.ec2.describe_instances(Filters=[{
@@ -34,8 +35,6 @@ class monitor_t2:
             Period=CLOUDWATCH_PERIOD,
             Statistics=['Average'],
         )
-
-        sns = boto3.client('sns')
 
         try:
             print(res)
