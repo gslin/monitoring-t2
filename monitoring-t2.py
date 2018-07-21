@@ -36,6 +36,9 @@ class monitor_t2:
             Statistics=['Average'],
         )
 
+        message = 'This is automatic script to alarm.\nCPU credit of instance {} is below 10.\n'.format(id)
+        subject = 'CPU credit of instance {} is below 10'.format(id)
+
         try:
             if res['Datapoints'][0]['Average'] < 10:
                 pass
